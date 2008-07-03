@@ -61,7 +61,7 @@ ofp = open(output_dir+"/maildata.dat", "r")
 msg = email.message_from_file(ofp)
 ofp.close()
 
-counter = 1
+counter = 0
 for part in msg.walk():
 	# multipart/* are just containers
 	if part.get_content_maintype() == 'multipart':
