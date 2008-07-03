@@ -1,0 +1,35 @@
+Overview
+
+Add a symlink in /etc/smrsh pointing <sender>.py to /usr/local/sbin/recmail.py
+e.g
+	
+	# cd /etc/smrsh
+	# ln -s /usr/local/subn/recmail.py globocom.py
+
+Add an entry for the sender to /etc/mail/virtusertable pointing to an alias 
+for which you put an alias in /etc/aliases.
+
+In /etc/mail/virtusertable add an entry
+
+	globocom@pccl.info	globocom
+
+Running make after making that change.
+
+Then in /etc/aliases add an entry
+
+	globocom:	|/etc/smrsh/globocom.py
+
+Running newaliases after making that change.
+
+
+Whenever email is sent to that address, it is piped through the python script, 
+/usr/local/sbin/recmail.py
+
+recmail.py will look at argv[0] to see who it has been called as (stripping off
+the pathname and .py extension). It will use this to determine where to store
+the data.
+
+It will split the message up into its parts and store them under 
+/data/maildata/<sender>/YYYY/MM/DD/part-xxx.extension along with the orginal 
+email stored under /data/maildata/<sender>/YYYY/MM/DD/maildata.dat
+
