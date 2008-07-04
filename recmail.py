@@ -52,7 +52,7 @@ whoami  = string.split(os.path.basename(sys.argv[0]), ".")[0]
 # Either save data to system directory or in user specified directory
 # Change maildir accordingly
 if len(sys.argv) == 1:
-	maildir    = "/tmp/maildata"
+	maildir    = "/data/maildata"
 	output_dir = maildir+"/"+whoami+"/"+year+"/"+month+"/"+day
 	create_directories()
 else:
