@@ -38,6 +38,8 @@ def create_directories():
 			raise
 
 
+os.umask(0007)
+
 t       = datetime.now()
 year    = t.strftime("%Y")
 month   = t.strftime("%m")
@@ -45,7 +47,7 @@ day     = t.strftime("%d")
 ts      = t.strftime("%s")
 
 # Find out who we where called as
-whoami     = string.split(os.path.basename(sys.argv[0]), ".")[0]
+whoami  = string.split(os.path.basename(sys.argv[0]), ".")[0]
 
 # Either save data to system directory or in user specified directory
 # Change maildir accordingly
