@@ -10,54 +10,62 @@ from time import time
 from datetime import datetime
 
 
+def create_directories():
+	global year, month, day, whoami, maildir
+
+	try:
+		os.mkdir(maildir+"/"+whoami)
+	except OSError, e:
+		if e.errno <> errno.EEXIST:
+			raise
+
+	try:
+		os.mkdir(maildir+"/"+whoami+"/"+year)
+	except OSError, e:
+		if e.errno <> errno.EEXIST:
+			raise
+
+	try:
+		os.mkdir(maildir+"/"+whoami+"/"+year+"/"+month)
+	except OSError, e:
+		if e.errno <> errno.EEXIST:
+			raise
+
+	try:
+		os.mkdir(maildir+"/"+whoami+"/"+year+"/"+month+"/"+day)
+	except OSError, e:
+		if e.errno <> errno.EEXIST:
+			raise
+
+
 t       = datetime.now()
 year    = t.strftime("%Y")
 month   = t.strftime("%m")
 day     = t.strftime("%d")
-
+ts      = t.strftime("%s")
 
 # Find out who we where called as
 whoami     = string.split(os.path.basename(sys.argv[0]), ".")[0]
-maildir    = "/tmp/maildata"
-output_dir = maildir+"/"+whoami+"/"+year+"/"+month+"/"+day
 
-
-# Create directory structure
-try:
-	os.mkdir(maildir+"/"+whoami)
-except OSError, e:
-	if e.errno <> errno.EEXIST:
-		raise
-
-try:
-	os.mkdir(maildir+"/"+whoami+"/"+year)
-except OSError, e:
-	if e.errno <> errno.EEXIST:
-		raise
-
-try:
-	os.mkdir(maildir+"/"+whoami+"/"+year+"/"+month)
-except OSError, e:
-	if e.errno <> errno.EEXIST:
-		raise
-
-try:
-	os.mkdir(maildir+"/"+whoami+"/"+year+"/"+month+"/"+day)
-except OSError, e:
-	if e.errno <> errno.EEXIST:
-		raise
-
+# Either save data to system directory or in user specified directory
+# Change maildir accordingly
+if len(sys.argv) == 1:
+	maildir    = "/tmp/maildata"
+	output_dir = maildir+"/"+whoami+"/"+year+"/"+month+"/"+day
+	create_directories()
+else:
+	output_dir = sys.argv[1]
 
 # Get and save message
 lines = sys.stdin.readlines()
-ofp = open(output_dir+"/maildata.dat", "w")
+ofp = open(output_dir+"/maildata-"+ts+".dat", "w")
 for line in lines:
 	ofp.write(line)
 
 ofp.close()
 
 # Read in saved message
-ofp = open(output_dir+"/maildata.dat", "r")
+ofp = open(output_dir+"/maildata-"+ts+".dat", "r")
 msg = email.message_from_file(ofp)
 ofp.close()
 

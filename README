@@ -31,5 +31,14 @@ the data.
 
 It will split the message up into its parts and store them under 
 /data/maildata/<sender>/YYYY/MM/DD/part-xxx.extension along with the orginal 
-email stored under /data/maildata/<sender>/YYYY/MM/DD/maildata.dat
+email stored under /data/maildata/<sender>/YYYY/MM/DD/maildata-timestamp.dat
+where timestamp is the seconds since the epoch.
+
+
+You can run recmail manually e.g
+
+	./recmail.py /path/to/somedir < mailfile
+
+Where /path/to/somedir is where you want to save the output and mailfile is a 
+full email message.
 
