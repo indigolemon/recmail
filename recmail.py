@@ -82,6 +82,10 @@ for part in msg.walk():
 		# Use a generic bag-of-bits extension
 		ext = '.bin'
 	
+	if ext == '.dot':
+		# Python has two entries for application/msword, rename .dot to .doc
+		ext = '.doc'
+
 	filename = 'part-%03d%s' % (counter, ext)
 	
 	counter += 1
