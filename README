@@ -34,10 +34,10 @@ It will split the message up into its parts and store them under
 email stored under /data/maildata/<sender>/YYYY/MM/DD/UUID/maildata.dat
 
 There is also an index file created (00INDEX) that links original attachment 
-filenames to thier part-xxx.xxx counterparts. 
+filenames to their part-xxx.xxx counterparts. 
 
-Multiple messages sent in the same day will be stored under seperate UUID/ 
-directories. Where UUID is a version 4 UUID, e.g 33faa523-d10f-4162-9876-ba30476a155c.
+Multiple messages sent in the same day will be stored under separate UUID/ 
+directories. Where UUID is e.g 33faa523-d10f-4162-9876-ba30476a155c.
 
 
 You can run recmail manually e.g
