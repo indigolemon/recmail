@@ -1,8 +1,12 @@
 #!/usr/bin/python
 #
-# Andrew Clayton <andrew@pccl.info>
+# recmail.py - A program to receive and store email attachments
 #
 # Based on code from: http://docs.python.org/lib/node161.html
+#
+# Copyright (c) 2008-2010	Andrew Clayton <andrew@pccl.info>
+# Released under the GNU General Public License (GPL) version 2.
+# See COPYING
 #
 
 import os, sys, email, errno, mimetypes, string, uuid
