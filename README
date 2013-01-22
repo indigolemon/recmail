@@ -1,10 +1,10 @@
 Overview
 
-Add a symlink in /etc/smrsh pointing <sender>.py to /usr/local/sbin/recmail.py
+Add a symlink in /etc/smrsh pointing <sender> to /usr/local/sbin/recmail
 e.g
 	
 	# cd /etc/smrsh
-	# ln -s /usr/local/sbin/recmail.py globocom.py
+	# ln -s /usr/local/sbin/recmail globocom
 
 Add an entry for the sender to /etc/mail/virtusertable pointing to an alias 
 for which you put an alias in /etc/aliases.
@@ -17,24 +17,22 @@ Running make after making that change.
 
 Then in /etc/aliases add an entry
 
-	globocom:	|/etc/smrsh/globocom.py
+	globocom:	|/etc/smrsh/globocom
 
 Running newaliases after making that change.
 
 
-Whenever email is sent to that address, it is piped through the python script, 
-/usr/local/sbin/recmail.py
+Whenever email is sent to that address, it is piped through recmail
 
-recmail.py will look at argv[0] to see who it has been called as (stripping off
-the pathname and .py extension). It will use this to determine where to store
-the data.
+recmail will look at argv[0] to see who it has been called as (stripping off
+the pathname). It will use this to determine where to store the data.
 
 It will split the message up into its parts and store them under 
-/data/maildata/<sender>/YYYY/MM/DD/part-xxx.extension along with the orginal 
+/data/maildata/<sender>/YYYY/MM/DD/part-xxx.obj along with the orginal
 email stored under /data/maildata/<sender>/YYYY/MM/DD/UUID/maildata.dat
 
 There is also an index file created (00INDEX) that links original attachment 
-filenames to their part-xxx.xxx counterparts. 
+filenames to their part-xxx.obj counterparts.
 
 Multiple messages sent in the same day will be stored under separate UUID/ 
 directories. Where UUID is e.g 33faa523-d10f-4162-9876-ba30476a155c.
@@ -42,8 +40,7 @@ directories. Where UUID is e.g 33faa523-d10f-4162-9876-ba30476a155c.
 
 You can run recmail manually e.g
 
-	./recmail.py /path/to/somedir < mailfile
+	./recmail /path/to/somedir < mailfile
 
-Where /path/to/somedir is where you want to save the output and mailfile is a 
-full email message.
-
+Where /path/to/somedir is instead of /data/maildata and mailfile is a full
+email message.
