@@ -99,10 +99,7 @@ int main(int argc, char **argv)
 
 	umask(0007);
 
-	if (argv[0][0] == '/' || argv[0][0] == '.')
-		whoami = rindex(argv[0], '/') + 1;
-	else
-		whoami = argv[0];
+	whoami = (strstr(argv[0], "/")) ? strrchr(argv[0], '/') + 1 : argv[0];
 
 	uuid_generate(uuid);
 	uuid_unparse(uuid, uuid_s);
