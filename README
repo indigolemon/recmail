@@ -28,7 +28,7 @@ recmail will look at argv[0] to see who it has been called as (stripping off
 the pathname). It will use this to determine where to store the data.
 
 It will split the message up into its parts and store them under 
-/data/maildata/<sender>/YYYY/MM/DD/part-xxx.obj along with the orginal
+/data/maildata/<sender>/YYYY/MM/DD/part-xxx.obj along with the original
 email stored under /data/maildata/<sender>/YYYY/MM/DD/UUID/maildata.dat
 
 There is also an index file created (00INDEX) that links original attachment 
