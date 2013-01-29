@@ -26,6 +26,7 @@
 
 #include <glib.h>
 
+#define MD_BASE_DIR	"/data/maildata"
 #define BUF_SIZE	4096
 
 /*
@@ -110,9 +111,9 @@ int main(int argc, char **argv)
 				argv[1], whoami, tm->tm_year + 1900,
 				tm->tm_mon + 1, tm->tm_mday, uuid_s);
 	} else {
-		snprintf(maildir, PATH_MAX, "/data/maildata/%s/%d/%02d/%02d/%s",
-				whoami, tm->tm_year + 1900, tm->tm_mon + 1,
-				tm->tm_mday, uuid_s);
+		snprintf(maildir, PATH_MAX, "%s/%s/%d/%02d/%02d/%s",
+				MD_BASE_DIR, whoami, tm->tm_year + 1900,
+				tm->tm_mon + 1, tm->tm_mday, uuid_s);
 	}
 
 	g_mkdir_with_parents(maildir, 0777);
