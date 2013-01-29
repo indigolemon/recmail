@@ -1,4 +1,12 @@
 Overview
+========
+
+recmail is a simple utility to receive email, passed to it from a MDA,
+saving off any mime-parts and also storing a copy of the original message.
+
+
+Use
+===
 
 Add a symlink in /etc/smrsh pointing <sender> to /usr/local/sbin/recmail
 e.g
