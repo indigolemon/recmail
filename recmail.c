@@ -105,16 +105,10 @@ int main(int argc, char **argv)
 	uuid_generate(uuid);
 	uuid_unparse(uuid, uuid_s);
 
-	if (argc == 2) {
-		/* User supplied path */
-		snprintf(maildir, PATH_MAX, "%s/%s/%d/%02d/%02d/%s",
-				argv[1], whoami, tm->tm_year + 1900,
-				tm->tm_mon + 1, tm->tm_mday, uuid_s);
-	} else {
-		snprintf(maildir, PATH_MAX, "%s/%s/%d/%02d/%02d/%s",
-				MD_BASE_DIR, whoami, tm->tm_year + 1900,
-				tm->tm_mon + 1, tm->tm_mday, uuid_s);
-	}
+	snprintf(maildir, PATH_MAX, "%s/%s/%d/%02d/%02d/%s",
+			(argc == 2) ? argv[1] : MD_BASE_DIR, whoami,
+			tm->tm_year + 1900, tm->tm_mon + 1, tm->tm_mday,
+			uuid_s);
 
 	g_mkdir_with_parents(maildir, 0777);
 	err = chdir(maildir);
