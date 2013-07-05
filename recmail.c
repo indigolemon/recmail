@@ -84,6 +84,38 @@ static void process_message(void)
 	g_mime_shutdown();
 }
 
+/*
+ * From the git source:
+ * xread() is the same a read(), but it automatically restarts read()
+ * operations with a recoverable error (EAGAIN and EINTR).
+ */
+ssize_t xread(int fd, void *buf, size_t len)
+{
+	ssize_t nr;
+	while (1) {
+		nr = read(fd, buf, len);
+		if ((nr < 0) && (errno == EAGAIN || errno == EINTR))
+			continue;
+		return nr;
+	}
+}
+
+/*
+ * From the git source:
+ * xwrite() is the same as write(), but it automatically restarts write()
+ * operations with a recoverable error (EAGAIN and EINTR).
+ */
+ssize_t xwrite(int fd, const void *buf, size_t len)
+{
+	ssize_t nr;
+	while (1) {
+		nr = write(fd, buf, len);
+		if ((nr < 0) && (errno == EAGAIN || errno == EINTR))
+			continue;
+		return nr;
+	}
+}
+
 int main(int argc, char **argv)
 {
 	int fd;
@@ -97,6 +129,8 @@ int main(int argc, char **argv)
 	char uuid_s[37];	/* 36 char UUID + '\0' */
 	const char *whoami;
 	uuid_t uuid;
+
+	sleep(180); /* If we are too quick, the mail may still be arriving */
 
 	umask(0007);
 
@@ -120,11 +154,11 @@ int main(int argc, char **argv)
 	if (fd == -1)
 		exit(EXIT_FAILURE);
 	do {
-		bytes_read = read(STDIN_FILENO, &buf, BUF_SIZE);
-		bytes_wrote = write(fd, buf, bytes_read);
+		bytes_read = xread(STDIN_FILENO, &buf, BUF_SIZE);
+		bytes_wrote = xwrite(fd, buf, bytes_read);
 		if (bytes_wrote != bytes_read)
 			exit(EXIT_FAILURE);
-	} while (bytes_read == BUF_SIZE);
+	} while (bytes_read != 0);
 	close(fd);
 
 	process_message();
